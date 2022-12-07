@@ -1,0 +1,196 @@
+{{!-- navbar --}}
+    {{> header}}
+    <main>
+        <div class="container">
+            <div class="w- p-5 mt-5 border rounded mx-auto shadow">
+                {{!-- Registration Form --}}
+                <form id="my-form" method="POST" action="/postdata?_csrf={{csrf}}" enctype="multipart/form-data">
+                {{!-- handle error msg after post method --}}
+                {{#if errMsg}}
+                    <div class="alert alert-danger"> {{errMsg}}</div>
+                    {{/if}}
+                    {{#if succMsg}}
+                    <div class="alert alert-success"> {{succMsg}}</div>
+                    {{/if}}
+                    <div class="mb-4 row">
+                        <div class="col-1">
+                            <img src="https://uilogos.co/img/logomark/hexa.png" class="mb-2" height="70px" alt="">
+
+                        </div>
+                        <p class=" col-11 my-auto fs-1">Registration</p>
+                    </div>
+                    <hr>
+                    <div class="mt-5 row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name">
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" name="email"
+                                    aria-describedby="emailHelp">
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="uname" name="uname"
+                                    aria-describedby="emailHelp">
+
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" id="pass" name="password">
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label class="form-label">Age</label>
+                                <input type="text" class="form-control" id="age" name="age">
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" name="city">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Gender</label>
+                                <div class="form-control border-white">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="gender" name="gender" value="Male">
+                                        <label class="form-check-label" for="inlineRadio1">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="gender" name="gender" value="Female">
+                                        <label class="form-check-label" for="inlineRadio2">Female</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                             <div class="mb-3">
+                                <label class="form-label">Upload File</label>
+                                <input type="file" id="myFile" name="att">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="alert alert-danger text-center border-sharp" style="display: none;" id="error"
+                        role="alert"></div>
+                    <div class="alert alert-success text-center" style="display: none;" id="success" role="alert"></div>
+                     
+                    <button type="submit" class="btn btn-warning" name="reg">Register</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+{{> footer}}
+{{!-- custom validation --}}
+<script>
+        var regis_form = document.getElementById("my-form");
+        regis_form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+            var name = document.getElementById("name");
+            var uname = document.getElementById("uname");
+            var email = document.getElementById("email");
+            var password = document.getElementById("pass");
+            var age = document.getElementById("age");
+            var city = document.getElementById("city");
+            var gender = document.getElementsByName("gender");
+            var success = document.getElementById("success");
+            var error = document.getElementById("error");
+
+            var regname = /[a-zA-A]/;
+            var regemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            var regpass = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,24}$/;
+            var regage = /^[0-9]{2}$/;
+
+
+
+            if (!regname.test(name.value)) {
+                error.style.display = "block";
+                name.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "Name should be Chars only"
+                return false;
+            }
+            else if (!regemail.test(email.value)) {
+                error.style.display = "block";
+                name.style.border = "none";
+                email.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "Invalid Email address."
+                return false;
+            }
+            else if (!regname.test(uname.value)) {
+                error.style.display = "block";
+                name.style.border = "none";
+                email.style.border = "none";
+                
+                uname.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "Invalid Email address."
+                return false;
+            }
+             
+            else if (!regpass.test(pass.value)) {
+                name.style.border = "none";
+                email.style.border = "none";
+                uname.style.border = "none";
+                error.style.display = "block";
+                pass.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "Invalid Password."
+                return false;
+            }
+            else if (!regage.test(age.value)) {
+                name.style.border = "none";
+                email.style.border = "none";
+                pass.style.border = "none";
+                error.style.display = "block";
+                age.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "Age should be 1 to 100"
+                return false;
+            }
+            else if (!regname.test(city.value)) {
+                name.style.border = "none";
+                email.style.border = "none";
+                pass.style.border = "none";
+                age.style.border = "none";
+                error.style.display = "block";
+                city.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "City should be Chars only."
+                return false;
+            }
+            else if (gender[0].checked == false && gender[1].checked == false) {
+                name.style.border = "none";
+                email.style.border = "none";
+                pass.style.border = "none";
+                age.style.border = "none";
+                city.style.border = "none";
+                error.style.display = "block";
+                success.style.display = "none";
+                error.innerHTML = "Select Gender"
+                return false;
+            }
+            else {
+                name.style.border = "none";
+                email.style.border = "none";
+                pass.style.border = "none";
+                age.style.border = "none";
+                city.style.border = "none";
+                success.style.display = "block";
+                error.style.display = "none";
+                success.innerHTML = "Form Submitted.";
+                regis_form.submit();
+            }
+        })
+    </script>
+
+   

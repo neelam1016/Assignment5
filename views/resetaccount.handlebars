@@ -1,0 +1,57 @@
+{{> header}}
+{{!-- <div class="container">
+          <h2> Reset Password</h2>
+          {{#if errMsg}}
+             <div class="alert alert-danger"> {{errMsg}}</div>
+          {{/if}}
+             {{#if succMsg}}
+             <div class="alert alert-success"> {{succMsg}}</div>
+          {{/if}}
+          <form method="post" action="/postresetpassword">
+            <div class="form-group">
+                <label> Password </label>
+                <input type="password" name="password" class="form-control"/>
+            </div>
+           <input type="hidden" name="id" value="{{uid}}"/>
+           <input type="hidden" name="token" value="{{token}}"/>
+            <input type="hidden" name="_csrf" value="{{csrf}}"/>
+            <input type="submit" value="Submit" class="btn btn-success"/>
+            
+          </form>
+       </div> --}}
+<div class="container d-flex flex-column">
+  <div class="row align-items-center justify-content-center
+     mt-5 g-0">
+    <div class="col-12 col-md-8 col-lg-4 border-top border-3 border-primary">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="mb-4">
+            <h5 class="text-center">Reset Password</h5>
+          </div>
+          {{#if errMsg}}
+             <div class="alert alert-danger"> {{errMsg}}</div>
+          {{/if}}
+             {{#if succMsg}}
+             <div class="alert alert-success"> {{succMsg}}</div>
+          {{/if}}
+          <form method="post" action="/postresetpassword">
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="email" class="form-control" name="password" placeholder="Enter Your Password"
+                required="">
+            </div>
+            <input type="hidden" name="id" value="{{uid}}"/>
+            <input type="hidden" name="token" value="{{token}}"/>
+            <input type="hidden" name="_csrf" value="{{csrf}}"/>
+            <div class="mb-3 d-grid">
+              <button type="submit" class="btn btn-primary">
+                Reset Password
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{> footer}}

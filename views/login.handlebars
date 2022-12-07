@@ -1,0 +1,81 @@
+{{!-- navbar --}}
+    {{> header}}
+    <main>
+        <div class="container">
+            <div class="w-50 p-5 mt-5 border rounded mx-auto shadow">
+                {{!-- Login form --}}
+                <form id="login-form" method="POST" action="postlogindata" >
+                    {{!-- handle errmsg after post method --}}
+                    {{#if errMsg}}
+                    <div class="alert alert-danger"> {{errMsg}}</div>
+                    {{/if}}
+                    {{#if sucMsg}}
+                    <div class="alert alert-danger"> {{sucMsg}}</div>
+                    {{/if}}
+                    
+                    <div class="mb-4 text-center">
+                        <img src="https://uilogos.co/img/logomark/hexa.png" class="mb-2" width="90px" alt="">
+                        <h4 class="text-muted">Login Here</h4>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Username</label>
+                        <input type="text" class="form-control" id="email" name="uname" aria-describedby="emailHelp">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="pass" name="password">
+
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="cb" name="cheak">
+                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+
+                    </div>
+                    <div class="alert alert-danger text-center border-sharp" style="display: none;" id="error"
+                        role="alert"></div>
+                    <div class="alert alert-success text-center" style="display: none;" id="success" role="alert"></div>
+                     <input type="hidden" name="_csrf" value="{{csrf}}"/>
+                      <p> For new user <a href="/resetpassword"> Reset Password</a></p>
+                    <button type="submit" class="btn btn-warning" name="sub">Login</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    {{> footer}}
+    {{!-- Custom validations --}}
+    <script>
+        var login_form = document.getElementById("login-form");
+        login_form.addEventListener("submit", function(event) {
+        event.preventDefault();
+            var email = document.getElementById("email");
+            var password = document.getElementById("pass"); 
+            var regname = /[a-zA-A]/;
+            var regemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            var regpass = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,24}$/;
+             if (!regname.test(email.value)) {
+                error.style.display = "block";
+                email.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "Invalid Email address.";
+                
+            }
+            else if (!regpass.test(pass.value)) {
+                email.style.border = "none";
+                error.style.display = "block";
+                pass.style.border = "red solid 1px";
+                success.style.display = "none";
+                error.innerHTML = "Invalid Password."
+                
+            }
+            
+            else {
+                email.style.border = "none";
+                pass.style.border = "none";
+                success.style.display = "block";
+                error.style.display = "none";
+                success.innerHTML = "Message Submitted.";
+                login_form.submit();
+            }
+        })
+    </script>
